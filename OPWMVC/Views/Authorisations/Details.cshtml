@@ -1,0 +1,74 @@
+﻿@model OPWMVC.Models.Authorisation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Authorisation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.User_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Company)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Company)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_Section_Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_Section_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.User_Approval_Limit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.User_Approval_Limit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Work.OPW_Building_Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Work.OPW_Building_Code)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.AuthorisationId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

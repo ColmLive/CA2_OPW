@@ -1,0 +1,69 @@
+﻿@model IEnumerable<OPWMVC.Models.Building>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OPW_Building_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.County)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.B_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cost_Centre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.B_Team)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Work.OPW_Building_Code)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OPW_Building_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.County)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.B_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cost_Centre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.B_Team)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Work.OPW_Building_Code)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.BuildingId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.BuildingId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.BuildingId })
+        </td>
+    </tr>
+}
+
+</table>

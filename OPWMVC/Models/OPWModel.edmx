@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="OPWDB.BuildingContextModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Authorisations">
+          <Key>
+            <PropertyRef Name="AuthorisationId" />
+          </Key>
+          <Property Name="AuthorisationId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="User_Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="User_Password" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Company" Type="int" Nullable="false" />
+          <Property Name="User" Type="int" Nullable="false" />
+          <Property Name="User_Section_Code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="User_Approval_Limit" Type="float" Nullable="false" />
+          <Property Name="WorkId" Type="int" />
+        </EntityType>
+        <EntityType Name="Buildings">
+          <Key>
+            <PropertyRef Name="BuildingId" />
+          </Key>
+          <Property Name="BuildingId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OPW_Building_Code" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="County" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="B_Type" Type="int" Nullable="false" />
+          <Property Name="Cost_Centre" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="B_Team" Type="int" Nullable="false" />
+          <Property Name="WorkId" Type="int" />
+        </EntityType>
+        <EntityType Name="Works">
+          <Key>
+            <PropertyRef Name="WorkId" />
+          </Key>
+          <Property Name="WorkId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OPW_Building_Code" Type="nvarchar(max)" />
+          <Property Name="Project_Code" Type="nvarchar" MaxLength="3" Nullable="false" />
+          <Property Name="Project_Desc" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Proj_budget_Requested" Type="float" Nullable="false" />
+          <Property Name="Proj_budget_Approved" Type="float" Nullable="false" />
+          <Property Name="Proj_funds_issued" Type="float" Nullable="false" />
+          <Property Name="Proj_Act_Cost" Type="float" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_dbo_Authorisations_dbo_Works_WorkId">
+          <End Role="Works" Type="Self.Works" Multiplicity="0..1" />
+          <End Role="Authorisations" Type="Self.Authorisations" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkId" />
+            </Principal>
+            <Dependent Role="Authorisations">
+              <PropertyRef Name="WorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Buildings_dbo_Works_WorkId">
+          <End Role="Works" Type="Self.Works" Multiplicity="0..1" />
+          <End Role="Buildings" Type="Self.Buildings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkId" />
+            </Principal>
+            <Dependent Role="Buildings">
+              <PropertyRef Name="WorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OPWDBBuildingContextModelStoreContainer">
+          <EntitySet Name="Authorisations" EntityType="Self.Authorisations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Buildings" EntityType="Self.Buildings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Works" EntityType="Self.Works" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_dbo_Authorisations_dbo_Works_WorkId" Association="Self.FK_dbo_Authorisations_dbo_Works_WorkId">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="Authorisations" EntitySet="Authorisations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Buildings_dbo_Works_WorkId" Association="Self.FK_dbo_Buildings_dbo_Works_WorkId">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="Buildings" EntitySet="Buildings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OPWDB.BuildingContextModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Authorisation">
+          <Key>
+            <PropertyRef Name="AuthorisationId" />
+          </Key>
+          <Property Name="AuthorisationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="User_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Company" Type="Int32" Nullable="false" />
+          <Property Name="User" Type="Int32" Nullable="false" />
+          <Property Name="User_Section_Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="User_Approval_Limit" Type="Double" Nullable="false" />
+          <Property Name="WorkId" Type="Int32" />
+          <NavigationProperty Name="Work" Relationship="Self.FK_dbo_Authorisations_dbo_Works_WorkId" FromRole="Authorisations" ToRole="Works" />
+        </EntityType>
+        <EntityType Name="Building">
+          <Key>
+            <PropertyRef Name="BuildingId" />
+          </Key>
+          <Property Name="BuildingId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OPW_Building_Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="County" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="B_Type" Type="Int32" Nullable="false" />
+          <Property Name="Cost_Centre" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="B_Team" Type="Int32" Nullable="false" />
+          <Property Name="WorkId" Type="Int32" />
+          <NavigationProperty Name="Work" Relationship="Self.FK_dbo_Buildings_dbo_Works_WorkId" FromRole="Buildings" ToRole="Works" />
+        </EntityType>
+        <EntityType Name="Work">
+          <Key>
+            <PropertyRef Name="WorkId" />
+          </Key>
+          <Property Name="WorkId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OPW_Building_Code" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Project_Code" Type="String" MaxLength="3" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Project_Desc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Proj_budget_Requested" Type="Double" Nullable="false" />
+          <Property Name="Proj_budget_Approved" Type="Double" Nullable="false" />
+          <Property Name="Proj_funds_issued" Type="Double" Nullable="false" />
+          <Property Name="Proj_Act_Cost" Type="Double" Nullable="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Authorisations" Relationship="Self.FK_dbo_Authorisations_dbo_Works_WorkId" FromRole="Works" ToRole="Authorisations" />
+          <NavigationProperty Name="Buildings" Relationship="Self.FK_dbo_Buildings_dbo_Works_WorkId" FromRole="Works" ToRole="Buildings" />
+        </EntityType>
+        <Association Name="FK_dbo_Authorisations_dbo_Works_WorkId">
+          <End Role="Works" Type="Self.Work" Multiplicity="0..1" />
+          <End Role="Authorisations" Type="Self.Authorisation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkId" />
+            </Principal>
+            <Dependent Role="Authorisations">
+              <PropertyRef Name="WorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_dbo_Buildings_dbo_Works_WorkId">
+          <End Role="Works" Type="Self.Work" Multiplicity="0..1" />
+          <End Role="Buildings" Type="Self.Building" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Works">
+              <PropertyRef Name="WorkId" />
+            </Principal>
+            <Dependent Role="Buildings">
+              <PropertyRef Name="WorkId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OPWEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Authorisations" EntityType="Self.Authorisation" />
+          <EntitySet Name="Buildings" EntityType="Self.Building" />
+          <EntitySet Name="Works" EntityType="Self.Work" />
+          <AssociationSet Name="FK_dbo_Authorisations_dbo_Works_WorkId" Association="Self.FK_dbo_Authorisations_dbo_Works_WorkId">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="Authorisations" EntitySet="Authorisations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_dbo_Buildings_dbo_Works_WorkId" Association="Self.FK_dbo_Buildings_dbo_Works_WorkId">
+            <End Role="Works" EntitySet="Works" />
+            <End Role="Buildings" EntitySet="Buildings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OPWDBBuildingContextModelStoreContainer" CdmEntityContainer="OPWEntities">
+          <EntitySetMapping Name="Authorisations">
+            <EntityTypeMapping TypeName="OPWDB.BuildingContextModel.Authorisation">
+              <MappingFragment StoreEntitySet="Authorisations">
+                <ScalarProperty Name="AuthorisationId" ColumnName="AuthorisationId" />
+                <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+                <ScalarProperty Name="User_Password" ColumnName="User_Password" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="User" ColumnName="User" />
+                <ScalarProperty Name="User_Section_Code" ColumnName="User_Section_Code" />
+                <ScalarProperty Name="User_Approval_Limit" ColumnName="User_Approval_Limit" />
+                <ScalarProperty Name="WorkId" ColumnName="WorkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Buildings">
+            <EntityTypeMapping TypeName="OPWDB.BuildingContextModel.Building">
+              <MappingFragment StoreEntitySet="Buildings">
+                <ScalarProperty Name="BuildingId" ColumnName="BuildingId" />
+                <ScalarProperty Name="OPW_Building_Code" ColumnName="OPW_Building_Code" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="County" ColumnName="County" />
+                <ScalarProperty Name="B_Type" ColumnName="B_Type" />
+                <ScalarProperty Name="Cost_Centre" ColumnName="Cost_Centre" />
+                <ScalarProperty Name="B_Team" ColumnName="B_Team" />
+                <ScalarProperty Name="WorkId" ColumnName="WorkId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Works">
+            <EntityTypeMapping TypeName="OPWDB.BuildingContextModel.Work">
+              <MappingFragment StoreEntitySet="Works">
+                <ScalarProperty Name="WorkId" ColumnName="WorkId" />
+                <ScalarProperty Name="OPW_Building_Code" ColumnName="OPW_Building_Code" />
+                <ScalarProperty Name="Project_Code" ColumnName="Project_Code" />
+                <ScalarProperty Name="Project_Desc" ColumnName="Project_Desc" />
+                <ScalarProperty Name="Proj_budget_Requested" ColumnName="Proj_budget_Requested" />
+                <ScalarProperty Name="Proj_budget_Approved" ColumnName="Proj_budget_Approved" />
+                <ScalarProperty Name="Proj_funds_issued" ColumnName="Proj_funds_issued" />
+                <ScalarProperty Name="Proj_Act_Cost" ColumnName="Proj_Act_Cost" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

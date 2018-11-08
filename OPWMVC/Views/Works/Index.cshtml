@@ -1,0 +1,75 @@
+﻿@model IEnumerable<OPWMVC.Models.Work>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.OPW_Building_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Project_Code)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Project_Desc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proj_budget_Requested)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proj_budget_Approved)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proj_funds_issued)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Proj_Act_Cost)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.OPW_Building_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project_Code)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Project_Desc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proj_budget_Requested)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proj_budget_Approved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proj_funds_issued)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Proj_Act_Cost)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Status)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.WorkId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.WorkId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.WorkId })
+        </td>
+    </tr>
+}
+
+</table>
